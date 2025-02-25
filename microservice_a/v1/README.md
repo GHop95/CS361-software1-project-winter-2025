@@ -84,3 +84,9 @@ Example:
   if (command != "--enter_username--"):
     print("[ERROR]: Unexpected response\n")
     return "--failed--
+
+
+
+UML Diagram
+
+![UML diagram microservice A](https://github.com/user-attachments/assets/6308b571-7f25-4ac9-90d7-d013c400bcb6)
