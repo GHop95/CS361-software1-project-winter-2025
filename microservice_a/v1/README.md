@@ -1,6 +1,6 @@
 Users/Profiles Login Microservice Version 1.0
 
-This program is a mircoservice used for validating login information for created users in your program. By sending commands to the microservice from your main program, you can enter Username and Password information for existing users, or create new users. You can then use the logged in user to retrieve their corresponding data from your database into your program. Upon start-up, the microservice will populate an array of existing users objects using data from "users_saved.txt". When the program is terminated, it will write/save each users username and password to the same file.
+This program is a microservice used for validating login information for created users in your program. By sending commands to the microservice from your main program, you can enter Username and Password information for existing users, or create new users. You can then use the logged in user to retrieve their corresponding data from your database into your program. Upon start-up, the microservice will populate an array of existing users objects using data from "users_saved.txt". When the program is terminated, it will write/save each users username and password to the same file.
 This microservice uses the .txt file "pipe_profiles.txt" as a communication pipeline between your client program and the microservice itself. 
 The Python file profiles.py is the main microservice program used to manage commands sent to it through the text file pipe.
 It will read commands from the text file "pipe_profiles.txt".
@@ -12,9 +12,9 @@ If you are developing a program in another language, below will explain how you 
 0. Begin the microservice program using what ever system you have to run Python. The program will populate its array of users, and then read from the pipe textfile "pipe_profiles.txt" until it is told which mode to enter.
 1. TO ENTER "Login existing user mode",
 - Write "--1--" to the pipe textfile "pipe_profiles.txt"
-- profiles.py will then write "--enter_username--" to the pipe, signifing it is ready to receive a username.
+- profiles.py will then write "--enter_username--" to the pipe, signifying it is ready to receive a username.
 - Write the desired Username to the pipe, and profiles.py will then read it. 
-- If that username exists in the array of users loaded, profiles.py will write "--enter_password--" to the pipe, signifing it is ready to receive the Password
+- If that username exists in the array of users loaded, profiles.py will write "--enter_password--" to the pipe, signifying it is ready to receive the Password
 - Write the matching Password to the pipe, and profiles.py will then read it.
 - If the password matches the one in the user array, profiles.py will write "--success--"
 to the pipe.
@@ -24,9 +24,9 @@ FAIL STATES:
 
 2. TO ENTER "Create new user Mode",
 - Write "--2--" to the pipe textfile "pipe_profiles.txt"
-- profiles.py will then write "--create_username--" to the pipe, signifing it is ready to receive a new username.
+- profiles.py will then write "--create_username--" to the pipe, signifying it is ready to receive a new username.
 - Write the desired new Username to the pipe, and profiles.py will then read it.
-- If that username does not exist in the array of users, profiles.py will write "--create_password--" to the pipe, signifing it is ready to receive the new Password.
+- If that username does not exist in the array of users, profiles.py will write "--create_password--" to the pipe, signifying it is ready to receive the new Password.
 - Write the new Password to the pipe, and profiles.py will then read it.
 - profiles.py will then add a new user containing the new username and password to its collection.
 - If it is successful, it will write "--success-create--" to the pipe.
@@ -53,7 +53,7 @@ COMMANDS from profiles.py
 --success--    = written if Password read matches
 --create_username--    = written when program is ready to receive new Username
 --existing_user_found--    = written when program cancels create, because username is taken
---create_password--    = written when program is ready to receive new Pasword
+--create_password--    = written when program is ready to receive new Password
 --success_create--    = written when new user is created
 --failed_create--    = written when new user fails to be created
 
@@ -65,7 +65,7 @@ WRITING USERNAME TO PIPE in Python:
         pipe.write(username)
         pipe.flush()
 
-RECIEVING CONFIRMATION FROM PIPE in Python:
+RECEIVING CONFIRMATION FROM PIPE in Python:
 
     command = password
     while (command == password):
@@ -77,7 +77,8 @@ RECIEVING CONFIRMATION FROM PIPE in Python:
             print("\n[SUCCESS]\n")
             return username
 
-NOTE: It is recommended to have code in your program to handle unexpected values written by the Microservice to the pipe, in case something unexpected happens.
+NOTE: It is recommended to add a check to make sure a user cannot make their username and password the same as any of the commands used by the microservice. If they do they, microservice will not work.
+NOTE: It is recommended to have code in your program to handle unexpected values written by the Microservice to the pipe, in case signal or something occurs that interrupts reading/writing to the file.
 Example:
 
   if (command != "--enter_username--"):
