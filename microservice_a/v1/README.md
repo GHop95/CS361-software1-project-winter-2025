@@ -1,3 +1,5 @@
+Users/Profiles Login Microservice Version 1.0
+
 This is a microservice that uses a txt as a pipe between the client program and the microservice program. It is designed to access and create user logins for your application. The microservice itself is contained in the file profiles.py. Upon start-up, the microservice will populate an array of users containing Usernames and Passwords using data from "users_saved.txt". When the program is terminated, it write/save the arrays contents to the same file.
 
 If your main program is running using Python, the file test_profiles.py contains several functions that you can use to directly interact with the microservice without any extra coding. Calling login_ask() will prompt the user for what they want to do (login to existing user, or create new user), and once the necessary Username and Password values are entered, login_ask() will return a string containing the username that is logged it, for you to use to load the correct data into your program.
