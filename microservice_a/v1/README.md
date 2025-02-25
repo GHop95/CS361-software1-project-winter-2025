@@ -1,14 +1,17 @@
 Users/Profiles Login Microservice Version 1.0
 
-This is a microservice that uses a txt as a pipe between the client program and the microservice program. It is designed to access and create user logins for your application. The microservice itself is contained in the file profiles.py. Upon start-up, the microservice will populate an array of users containing Usernames and Passwords using data from "users_saved.txt". When the program is terminated, it write/save the arrays contents to the same file.
+This program is a mircoservice used for validating login information for Created users in your program. By sending commands to the microservice from your main program, you can enter Username and Password information for existing users in your program, or create new users for your program. You can then use the logged in user to retrieve their corresponding data from your database into your program. Upon start-up, the microservice will populate an array of existing users containing Usernames and Passwords using data from "users_saved.txt". When the program is terminated, it write/save the arrays contents to the same file.
+This microservice uses a .txt file as a communication pipeline between your client program and the microservice itself. 
+The file python program profiles.py is the main microservice program used to manage commands sent to it through the text file pipe.
+It will read commands from the text file "pipe_profiles.txt"
 
 If your main program is running using Python, the file test_profiles.py contains several functions that you can use to directly interact with the microservice without any extra coding. Calling login_ask() will prompt the user for what they want to do (login to existing user, or create new user), and once the necessary Username and Password values are entered, login_ask() will return a string containing the username that is logged it, for you to use to load the correct data into your program.
 
-If you are using this program with another language, this will explain how you can interact with the microservice file profiles.py. 
+If you are using this program with another language, below will explain how you can interact with the microservice file profiles.py. 
 
 
-0. Begin the program using what ever system you have to run Python. The program will populate its array of users, and then read from the pipe textfile "pipe_profiles.txt" until it is told which mode to enter.
-1. To enter "Login existing User Mode",
+0. Begin the microservice program using what ever system you have to run Python. The program will populate its array of users, and then read from the pipe textfile "pipe_profiles.txt" until it is told which mode to enter.
+1. TO ENTER "Login existing user mode",
 - Write "--1--" to the pipe textfile "pipe_profiles.txt"
 - profiles.py will then write "--enter_username--" to the pipe, signifing it is ready to receive a username.
 - Write the desired Username to the pipe, and profiles.py will then read it. 
@@ -18,9 +21,9 @@ If you are using this program with another language, this will explain how you c
 to the pipe.
 FAIL STATES:
 - If the username cannot be found in the users array, "--user_not_found--" will be written to the pipe.
-- If password read does not match password in users array, "--password_incorrect--" will be written to the pipe.
+- If the password read does not match the password in users array, "--password_incorrect--" will be written to the pipe.
 
-2. To enter "Login existing User Mode",
+2. TO ENTER "Create new user Mode",
 - Write "--2--" to the pipe textfile "pipe_profiles.txt"
 - profiles.py will then write "--create_username--" to the pipe, signifing it is ready to receive a new username.
 - Write the desired new Username to the pipe, and profiles.py will then read it.
@@ -32,10 +35,30 @@ FAIL STATES
 - If the new username is in the collection of users, it will write "--existing_user_found--" to the pipe.
 - If an error occurs while saving the user, it will write "--failed_create--" to the pipe.
 
-If any of the above FAIL STATES occur within profiles.py, the program will return to its bystanding stage, waiting to read which mode to enter.
+If any of the above FAIL STATES occur within profiles.py, the program will return to its beginning state, waiting to read which mode to enter.
+
+TO QUIT Microservice program:
+- When profiles.py is in its beginning state, write "--0--" to the pipe file, profiles.py will then read that and save its users before terminating.
+
+
+COMMANDS to profiles.py
+--1--    = Will enter microservice into login user mode
+--2--    = Will enter microservice into create user mode
+--0--    = Will save and quit the microservice
+
+COMMANDS from profiles.py
+--enter_username--    = written when program is ready to receive Username
+--user_not_found--    = written if program cannot find user based off Username
+--enter_password--    = written when program is ready to receive Password
+--password_incorrect--    = written if Password read is incorrect
+--success--    = written if Password read matches
+--create_username--    = written when program is ready to receive new Username
+--existing_user_found--    = written when program cancels create, because username is taken
+--create_password--    = written when program is ready to receive new Pasword
+--success_create--    = written when new user is created
+--failed_create--    = written when new user fails to be created
 
 Use these values written to the pipe by the profiles.py to according perform necessary actions.
-
 For example, 
 WRITING USERNAME TO PIPE in Python:
 
