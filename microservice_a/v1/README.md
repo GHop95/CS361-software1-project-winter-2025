@@ -1,14 +1,13 @@
 Users/Profiles Login Microservice Version 1.0
 
-This program is a mircoservice used for validating login information for Created users in your program. By sending commands to the microservice from your main program, you can enter Username and Password information for existing users in your program, or create new users for your program. You can then use the logged in user to retrieve their corresponding data from your database into your program. Upon start-up, the microservice will populate an array of existing users containing Usernames and Passwords using data from "users_saved.txt". When the program is terminated, it write/save the arrays contents to the same file.
-This microservice uses a .txt file as a communication pipeline between your client program and the microservice itself. 
-The file python program profiles.py is the main microservice program used to manage commands sent to it through the text file pipe.
-It will read commands from the text file "pipe_profiles.txt"
+This program is a mircoservice used for validating login information for created users in your program. By sending commands to the microservice from your main program, you can enter Username and Password information for existing users, or create new users. You can then use the logged in user to retrieve their corresponding data from your database into your program. Upon start-up, the microservice will populate an array of existing users objects using data from "users_saved.txt". When the program is terminated, it will write/save each users username and password to the same file.
+This microservice uses the .txt file "pipe_profiles.txt" as a communication pipeline between your client program and the microservice itself. 
+The Python file profiles.py is the main microservice program used to manage commands sent to it through the text file pipe.
+It will read commands from the text file "pipe_profiles.txt".
 
-If your main program is running using Python, the file test_profiles.py contains several functions that you can use to directly interact with the microservice without any extra coding. Calling login_ask() will prompt the user for what they want to do (login to existing user, or create new user), and once the necessary Username and Password values are entered, login_ask() will return a string containing the username that is logged it, for you to use to load the correct data into your program.
+If your main program is running using Python, the file test_profiles.py contains several functions that you can use to directly interact with the microservice without any extra coding. Calling login_ask() will prompt the user for what they want to do (login to existing user, or create new user), and once the necessary Username and Password values are entered, login_ask() will return a string containing the username that is logged it for you to use to load the correct data into your program.
 
-If you are using this program with another language, below will explain how you can interact with the microservice file profiles.py. 
-
+If you are developing a program in another language, below will explain how you can interact with the microservice file profiles.py. 
 
 0. Begin the microservice program using what ever system you have to run Python. The program will populate its array of users, and then read from the pipe textfile "pipe_profiles.txt" until it is told which mode to enter.
 1. TO ENTER "Login existing user mode",
@@ -62,21 +61,21 @@ Use these values written to the pipe by the profiles.py to according perform nec
 For example, 
 WRITING USERNAME TO PIPE in Python:
 
-  with open("pipe_profiles.txt", "w") as pipe: #open file to write Username
-    pipe.write(username)
-    pipe.flush()
+    with open("pipe_profiles.txt", "w") as pipe: #open file to write Username
+        pipe.write(username)
+        pipe.flush()
 
 RECIEVING CONFIRMATION FROM PIPE in Python:
 
-  command = password
-  while (command == password):
-    time.sleep(2)
-    with open("pipe_profiles.txt", "r") as pipe: 
-      command = pipe.readline().strip()
-    # ensure correct response from Password check
-    if (command == "--success--"):
-      print("\n[SUCCESS]\n")
-      return username
+    command = password
+    while (command == password):
+        time.sleep(2)
+        with open("pipe_profiles.txt", "r") as pipe: 
+            command = pipe.readline().strip()
+        # ensure correct response from Password check
+        if (command == "--success--"):
+            print("\n[SUCCESS]\n")
+            return username
 
 NOTE: It is recommended to have code in your program to handle unexpected values written by the Microservice to the pipe, in case something unexpected happens.
 Example:
