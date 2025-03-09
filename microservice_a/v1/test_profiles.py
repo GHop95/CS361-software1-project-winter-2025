@@ -147,10 +147,11 @@ def login_ask():
             passed = 0
         else:
             passed = 1
-        # End of loop, terminating profiles program
-        with open("pipe_profiles.txt", "w") as pipe: #open file to write Password
-                pipe.write("--0--")
-                pipe.flush()
+
+    # End of loop, terminating profiles program
+    with open("pipe_profiles.txt", "w") as pipe: #open file to write Password
+        pipe.write("--0--")
+        pipe.flush()
     return username
 
 
